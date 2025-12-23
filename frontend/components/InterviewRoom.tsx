@@ -138,11 +138,19 @@ export default function InterviewRoom() {
 
     const { transcript, isListening, startListening, stopListening, resetTranscript } = useSpeechRecognition();
 
-    // Get backend URL - Backend always runs on HTTP (no SSL)
+
+    // Get backend URL - Uses environment variable for production (Render)
     const getBackendUrl = useCallback(() => {
+        // Use environment variable if set (for production deployment)
+        if (process.env.NEXT_PUBLIC_BACKEND_URL) {
+            return process.env.NEXT_PUBLIC_BACKEND_URL;
+        }
+        // For Render/production: use the deployed backend URL
         const hostname = typeof window !== 'undefined' ? window.location.hostname : 'localhost';
-        // Backend runs on HTTP even if frontend is HTTPS
-        // For localhost, this is fine. For production, backend should also have SSL.
+        if (hostname !== 'localhost' && hostname !== '127.0.0.1') {
+            return 'https://ai-interviewer-1-tll5.onrender.com';
+        }
+        // Fallback to localhost for development
         return `http://${hostname}:8000`;
     }, []);
 
