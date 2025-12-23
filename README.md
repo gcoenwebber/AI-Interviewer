@@ -195,4 +195,4 @@ MIT License - feel free to use for your own projects!
 
 ---
 
-**Made with ❤️ for the AI Interview Hackathon**
+**Made with ❤️ for TechSprint**
