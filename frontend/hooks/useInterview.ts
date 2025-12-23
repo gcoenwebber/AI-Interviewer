@@ -46,10 +46,20 @@ export const useInterview = ({
     const reconnectTimeoutRef = useRef<NodeJS.Timeout | null>(null);
 
     // Get backend URL from environment or default
-    // Backend runs on plain HTTP/WS (no SSL), so always use ws://
+    // For production: Uses NEXT_PUBLIC_BACKEND_URL and converts to WebSocket protocol
     const getBackendUrl = useCallback(() => {
+        // Use environment variable if set (for production deployment)
+        if (process.env.NEXT_PUBLIC_BACKEND_URL) {
+            // Convert http(s) to ws(s) for WebSocket
+            const backendUrl = process.env.NEXT_PUBLIC_BACKEND_URL;
+            return backendUrl.replace('https://', 'wss://').replace('http://', 'ws://');
+        }
+        // For Render/production: use the deployed backend URL
         const hostname = typeof window !== 'undefined' ? window.location.hostname : 'localhost';
-        // Always use ws:// since backend doesn't have SSL
+        if (hostname !== 'localhost' && hostname !== '127.0.0.1') {
+            return 'wss://ai-interviewer-1-tll5.onrender.com';
+        }
+        // Fallback to localhost for development
         return `ws://${hostname}:8000`;
     }, []);
 
