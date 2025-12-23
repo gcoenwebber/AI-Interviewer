@@ -8,7 +8,7 @@ config({ path: resolve(__dirname, "../.env") });
 const nextConfig: NextConfig = {
   env: {
     NEXT_PUBLIC_SUPABASE_URL: process.env.SUPABASE_URL || "",
-    NEXT_PUBLIC_SUPABASE_API_KEY: process.env.SUPABASE_API_KEY || "",
+    NEXT_PUBLIC_SUPABASE_ANON_KEY: process.env.SUPABASE_ANON_KEY || "",
   },
 };
 
