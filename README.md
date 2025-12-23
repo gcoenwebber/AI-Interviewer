@@ -78,6 +78,8 @@ cp .env.example .env
 3. **Add your API keys to `.env`**
 ```env
 GEMINI_API_KEY=your_gemini_api_key
+SUPABASE_URL=your_supabase_project_url
+SUPABASE_ANON_KEY=your_supabase_anon_key
 ```
 
 4. **Run the application**
@@ -88,6 +90,24 @@ GEMINI_API_KEY=your_gemini_api_key
 5. **Open in browser**
 - Frontend: http://localhost:3000
 - Backend: http://localhost:8000
+
+## ☁️ Deploy to Render
+
+### Backend Service
+| Setting | Value |
+|---------|-------|
+| **Root Directory** | `backend` |
+| **Build Command** | `pip install -r requirements.txt` |
+| **Start Command** | `uvicorn main:app --host 0.0.0.0 --port $PORT` |
+| **Environment** | `GEMINI_API_KEY=your_key` |
+
+### Frontend Service
+| Setting | Value |
+|---------|-------|
+| **Root Directory** | `frontend` |
+| **Build Command** | `npm install && npm run build` |
+| **Start Command** | `npm run start` |
+| **Environment** | `BACKEND_URL=https://your-backend.onrender.com` |
 
 ## 🛠️ Tech Stack
 
